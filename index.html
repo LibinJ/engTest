@@ -11,13 +11,25 @@
 <script>
 var count = 0;
 permuteArray([],[1,2,3,4,5,6,7,8,9]);
+
 function show(num1, num2, num3){
    document.write(count + ": " +num1 + " x "+ num2 + " = " + num3 + "<br />");
 } 
+
+function convertValueToArr(num){
+    var arr= [];
+    while(num > 0){
+      arr.push(num%10);
+      num = (num-num%10)/10;
+    }
+	return arr;
+}
+
 function permuteArray(position,nums) {
-    var i, newArray, current, num1, num2, num3;
+    var i, newArray, current, num1, num2, num3, arr, uniqArr;
     if(nums.length <= 1){
        current = _.union(position,nums);
+       //document.write(current + "<br \>");
        num1 = 10*current[0]+current[1];
        num2 = 100*current[2]+10*current[3]+current[4];
        num3 = 1000*current[5]+100*current[6]+10*current[7]+current[8];
@@ -27,6 +39,19 @@ function permuteArray(position,nums) {
        }
     }
     else{
+       if(position.length == 5){
+            num1 = 10*position[0] +　position[1];
+            num2 = 100*position[2] + 10*position[3] + position[4];
+            num3 = num1 * num2;
+            arr = convertValueToArr(num3);
+            uniqArr = _.uniq(arr);
+            if(num3 > 10000)
+               return;
+            if(arr.length != 4 || _.contains(arr,0) || (uniqArr.length != arr.length))
+	    	return;
+            if(_.contains(position, arr[0]) || _.contains(position, arr[1]) || _.contains(position, arr[2]) || _.contains(position, arr[3]))
+	    	return;
+       }
        for(i = 0; i < nums.length; i++){
             newArray = _.union(_.first(nums,[i]),(nums.slice(i+1)));
             permuteArray(position.concat(nums[i]), newArray);
