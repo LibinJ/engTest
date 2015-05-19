@@ -22,7 +22,7 @@ function convertValueToArr(num){
       arr.push(num%10);
       num = (num-num%10)/10;
     }
-	return arr;
+    return arr;
 }
 
 function permuteArray(position,nums) {
@@ -43,10 +43,10 @@ function permuteArray(position,nums) {
             num1 = 10*position[0] +　position[1];
             num2 = 100*position[2] + 10*position[3] + position[4];
             num3 = num1 * num2;
-            arr = convertValueToArr(num3);
-            uniqArr = _.uniq(arr);
             if(num3 > 10000)
                return;
+            arr = convertValueToArr(num3);
+            uniqArr = _.uniq(arr);
             if(arr.length != 4 || _.contains(arr,0) || (uniqArr.length != arr.length))
 	    	return;
             if(_.contains(position, arr[0]) || _.contains(position, arr[1]) || _.contains(position, arr[2]) || _.contains(position, arr[3]))
